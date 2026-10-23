@@ -1,0 +1,1150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard</title>
+
+<style>
+:root {
+  --coral: #ff827b;
+  --peach: #ffc58e;
+  --yellow: #ffdd78;
+  --cream: #fffcf2;
+  --ink: #353535;
+  --line: #eee8d8;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Roboto, Arial, sans-serif;
+  color: var(--ink);
+  background: #fff;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.app {
+  position: relative;
+  width: 100%;
+  max-width: 406px;
+  height: 100dvh;
+  min-height: 600px;
+  margin: auto;
+  overflow: hidden;
+  background: #fff;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  background: #fff;
+}
+
+.screen.active {
+  display: block;
+}
+
+/* DASHBOARD HEADER */
+
+.dash-header {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  border-bottom: 1px solid #ddd;
+  background: white;
+}
+
+.hamburger {
+  width: 23px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hamburger span {
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--coral), var(--yellow));
+}
+
+.dash-header h1 {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* UPDATED NOTIFICATION BELL */
+
+.bell {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+}
+
+.bell svg {
+  display: block;
+  width: 25px;
+  height: 25px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.count, .tile-badge {
+  background: linear-gradient(120deg, var(--coral), var(--yellow));
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.count {
+  position: absolute;
+  top: -5px;
+  right: -7px;
+  padding: 3px 5px;
+}
+
+/* DASHBOARD CONTENT */
+
+.dash-content {
+  height: calc(100% - 145px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 16px;
+  scrollbar-width: none;
+}
+
+.dash-content::-webkit-scrollbar {
+  display: none;
+}
+
+.timetable-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 13px 21px 16px;
+}
+
+.timetable-heading h2,
+.tiles-heading h2 {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.dost {
+  padding: 4px 9px;
+  font-size: 14px;
+  border-radius: 6px;
+  background: linear-gradient(110deg, var(--coral), var(--yellow));
+}
+
+.timetable {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 0 7px 8px 21px;
+  scrollbar-width: none;
+}
+
+.class-card {
+  position: relative;
+  flex: 0 0 193px;
+  height: 120px;
+  overflow: hidden;
+  border-radius: 7px 7px 2px 2px;
+  background: linear-gradient(110deg, var(--coral), #ffb78b 48%, var(--yellow));
+  box-shadow: 0 2px 4px #00000015;
+}
+
+.class-info {
+  padding: 13px 12px;
+}
+
+.class-info h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 6px;
+}
+
+.class-info p {
+  font-size: 12px;
+  margin: 0 0 5px;
+}
+
+.present {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 12px;
+  padding: 3px 7px;
+  font-size: 11px;
+  background: #ffe59b;
+}
+
+.present::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #25a44c;
+}
+
+.class-time {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background: #303030;
+  font-size: 12px;
+}
+
+/* TILE GRID */
+
+.tiles-heading {
+  margin: 29px 21px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-button {
+  height: 25px;
+  width: 25px;
+  border: 0;
+  border-radius: 50%;
+  background: #242424;
+  color: white;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subtitle {
+  font-size: 14px;
+  margin: 0 21px 25px;
+}
+
+.tiles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 20px;
+  row-gap: 21px;
+  padding: 0 25px 24px 12px;
+}
+
+.tile {
+  position: relative;
+  height: 143px;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--cream);
+  box-shadow: 0 2px 5px #0000000b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 5px 18px;
+  cursor: pointer;
+}
+
+.tile.selected {
+  border: 2px solid var(--coral);
+}
+
+.tile-icon {
+  position: absolute;
+  top: 31px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile-icon svg {
+  width: 48px;
+  height: 48px;
+  fill: none;
+  stroke: #4a4a4a;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tile-label {
+  width: 100%;
+  min-height: 27px;
+  padding: 4px 2px;
+  border-radius: 5px;
+  background: var(--peach);
+  text-align: center;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.tile-badge {
+  position: absolute;
+  top: -14px;
+  right: -6px;
+  min-width: 29px;
+  height: 25px;
+  padding: 3px 5px;
+  text-align: center;
+  line-height: 19px;
+  z-index: 3;
+}
+
+/* BOTTOM NAVIGATION */
+
+.nav {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  height: 57px;
+  background: white;
+  border-top: 1px solid #e8e8e8;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  z-index: 5;
+}
+
+.nav-item {
+  border: 0;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: #929292;
+  font-size: 11px;
+}
+
+.nav-item svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nav-item.active {
+  color: #e8a25c;
+}
+
+/* MESS COUPON HEADER */
+
+.topbar {
+  height: 59px;
+  background: #303030;
+  color: white;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  align-items: center;
+  padding: 0 5px 0 8px;
+  border-bottom: 2px solid #555;
+}
+
+.topbar .back {
+  height: 57px;
+  width: 40px;
+  border: 0;
+  background: transparent;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.topbar .title {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.topbar .right-action {
+  border: 0;
+  background: transparent;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 5px;
+  height: 57px;
+  white-space: nowrap;
+}
+
+.mess-body {
+  position: absolute;
+  top: 59px;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  background: #fafafa;
+  overflow-y: auto;
+  padding: 7px 15px 0;
+  scrollbar-width: none;
+}
+
+.mess-body::-webkit-scrollbar {
+  display: none;
+}
+
+/* STUDENT PROFILE */
+
+.student-card {
+  min-height: 397px;
+  border-radius: 5px;
+  background: linear-gradient(110deg, #ff827b 0%, #ffb58c 55%, #ffdb78 100%);
+  padding: 18px 19px 15px;
+  box-shadow: 0 1px 4px #00000012;
+  overflow: hidden;
+}
+
+.student-photo {
+  display: block;
+  width: 112px;
+  height: 112px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  margin: 0 auto 9px;
+  background: #f5e8d6;
+}
+
+.student-name {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  margin-bottom: 27px;
+  overflow-wrap: anywhere;
+}
+
+.student-detail {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  margin-bottom: 9px;
+  overflow-wrap: anywhere;
+}
+
+.student-detail strong {
+  display: block;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+/* MEALS */
+
+.meal-panel {
+  min-height: 303px;
+  padding: 34px 15px 28px;
+  background: #fafafa;
+  box-shadow: 0 2px 4px #00000030;
+  text-align: center;
+}
+
+.meal-instruction {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 27px;
+  margin: 0 auto 11px;
+  max-width: 330px;
+}
+
+.rate-button {
+  height: 23px;
+  padding: 0 11px;
+  border: 2px solid #a93636;
+  border-radius: 8px;
+  background: white;
+  color: #333;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 14px;
+}
+
+.rate-button .star {
+  color: #ffbd31;
+  font-size: 15px;
+}
+
+.meal-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 0 auto;
+  max-width: 298px;
+}
+
+.meal-button {
+  height: 51px;
+  border: 0;
+  border-radius: 5px;
+  background: linear-gradient(110deg, var(--coral), var(--yellow));
+  box-shadow: 0 4px 4px #00000035;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #282828;
+}
+
+/* FEEDBACK POPUP */
+
+.feedback-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: none;
+}
+
+.feedback-overlay.open {
+  display: block;
+}
+
+.feedback-dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, .72);
+}
+
+.feedback-panel {
+  position: absolute;
+  top: 89px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fafafa;
+  box-shadow: 0 -2px 8px #00000018;
+}
+
+.feedback-bar {
+  height: 37px;
+  background: #303030;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 400;
+  position: relative;
+  box-shadow: 0 2px 4px #0004;
+}
+
+.feedback-close {
+  position: absolute;
+  right: 9px;
+  top: 0;
+  height: 37px;
+  width: 24px;
+  background: transparent;
+  border: 0;
+  color: white;
+  font-size: 19px;
+  font-weight: 300;
+}
+
+.feedback-content {
+  text-align: center;
+  padding: 12px 15px;
+}
+
+.feedback-content h2 {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0 0 11px;
+}
+
+.feedback-content p {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  margin: 0 0 16px;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.star-choice {
+  border: 0;
+  background: transparent;
+  color: #ffbd00;
+  font-size: 27px;
+  line-height: 1;
+  padding: 0 1px;
+}
+
+.star-choice.chosen {
+  color: #ffb400;
+}
+
+.feedback-note {
+  font-size: 12px !important;
+  color: #666;
+  margin-top: 15px !important;
+}
+
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: 38px;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  display: none;
+  z-index: 25;
+}
+
+.toast.show {
+  display: block;
+}
+
+.system-nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+}
+
+.gesture {
+  width: 108px;
+  height: 4px;
+  border-radius: 9px;
+  background: #646464;
+}
+
+@media(max-width: 360px) {
+  .tiles-grid {
+    column-gap: 12px;
+    padding-left: 12px;
+    padding-right: 20px;
+  }
+
+  .tile {
+    height: 135px;
+  }
+
+  .tile-label {
+    font-size: 12px;
+  }
+
+  .class-card {
+    flex-basis: 180px;
+  }
+
+  .student-card {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .student-detail,
+  .student-name {
+    font-size: 12px;
+  }
+
+  .meal-instruction {
+    font-size: 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="screen active">
+    <header class="dash-header">
+      <div class="hamburger"><span></span><span></span><span></span></div>
+      <h1>Dashboard</h1>
+
+      <!-- UPDATED BELL ICON WITH NOTIFICATION COUNT -->
+      <div class="bell" role="img" aria-label="Notifications, 11 unread">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+          <path d="M10 21h4"></path>
+        </svg>
+        <span class="count">11</span>
+      </div>
+    </header>
+
+    <main class="dash-content">
+      <div class="timetable-heading">
+        <h2>Today's Timetable</h2>
+        <span class="dost">Your Dost</span>
+      </div>
+
+      <div class="timetable">
+        <article class="class-card">
+          <div class="class-info">
+            <h3>INT335</h3>
+            <p>34-102A</p>
+            <span class="present">Present</span>
+          </div>
+          <div class="class-time">11:50-12:40 AM</div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-info">
+            <h3>CSE423</h3>
+            <p>34-102A</p>
+            <span class="present">Present</span>
+          </div>
+          <div class="class-time">11:00-11:50 AM</div>
+        </article>
+      </div>
+
+      <div class="tiles-heading">
+        <h2>Add More Tiles</h2>
+        <button class="add-button" onclick="addTile()">+</button>
+      </div>
+
+      <p class="subtitle">Click on the plus button to add menu grids.</p>
+
+      <div class="tiles-grid" id="tilesGrid">
+
+        <div class="tile" onclick="selectTile(this,'Announce')">
+          <span class="tile-badge">12</span>
+          <div class="tile-icon">
+            <svg viewBox="0 0 48 48">
+              <path d="M7 20L31 10L34 27L13 31Z M31 10L37 7L40 18L34 21 M13 31L17 39L21 37L18 30 M5 20L9 17L14 29L10 32 M30 6L31 2M38 5L41 2M41 11L45 10"/>
+            </svg>
+          </div>
+          <span class="tile-label">Announce</span>
+        </div>
+
+        <div class="tile selected" onclick="selectTile(this,'Edu Revolution')">
+          <div class="tile-icon">
+            <svg viewBox="0 0 48 48">
+              <rect x="7" y="16" width="34" height="23" rx="2"/>
+              <path d="M3 42H45M13 20H35M13 25H31M13 30H27M22 8L27 5L37 15L34 18Z M18 10L26 2L36 12L28 20Z"/>
+            </svg>
+          </div>
+          <span class="tile-label">Edu<br>Revolution</span>
+        </div>
+
+        <div class="tile" onclick="selectTile(this,'Fee Statement')">
+          <div class="tile-icon">
+            <svg viewBox="0 0 48 48">
+              <path d="M8 8L17 13L21 19L18 22L12 17L8 15Z M17 13L23 19L20 23L15 19 M19 23L24 27L28 24L24 20 M28 24L33 28L37 25L32 21 M13 28L18 32L23 28 M8 29L16 37L24 30 M25 30L31 36L38 29 M13 37H35"/>
+            </svg>
+          </div>
+          <span class="tile-label">Fee<br>Statement</span>
+        </div>
+
+        <div class="tile" onclick="selectTile(this,'Attendance')">
+          <span class="tile-badge">90 %</span>
+          <div class="tile-icon">
+            <svg viewBox="0 0 48 48">
+              <rect x="8" y="8" width="32" height="36" rx="2"/>
+              <rect x="13" y="13" width="22" height="26" rx="1"/>
+              <circle cx="24" cy="20" r="5"/>
+              <path d="M21 20L23 22L27 17 M18 30H30M18 34H27M18 5H30M20 5V9M28 5V9"/>
+            </svg>
+          </div>
+          <span class="tile-label">Attendance</span>
+        </div>
+
+        <div class="tile" onclick="selectTile(this,'Assignment')">
+          <span class="tile-badge">7</span>
+          <div class="tile-icon">
+            <svg viewBox="0 0 48 48">
+              <rect x="11" y="7" width="27" height="35" rx="2"/>
+              <path d="M17 14H31M17 19H31M17 24H31M17 29H31M17 34H27M5 13L8 10V36L5 39Z"/>
+            </svg>
+          </div>
+          <span class="tile-label">Assignment</span>
+        </div>
+
+        <div class="tile" onclick="selectTile(this,'Results')">
+          <span class="tile-badge">9.20</span>
+          <div class="tile-icon">
+            <svg viewBox="0 0 48 48">
+              <rect x="7" y="6" width="34" height="37" rx="2"/>
+              <circle cx="24" cy="16" r="6"/>
+              <path d="M24 12V16L27 18M13 27V36M19 30V36M25 26V36M31 22V36M12 39H36"/>
+            </svg>
+          </div>
+          <span class="tile-label">Results</span>
+        </div>
+
+        <div class="tile" onclick="selectTile(this,'Exams')">
+          <span class="tile-badge">8</span>
+          <div class="tile-icon">
+            <svg viewBox="0 0 48 48">
+              <rect x="7" y="7" width="28" height="35" rx="1"/>
+              <path d="M12 14H16M19 14H29M12 20H16M19 20H29M12 26H16M19 26H29M12 32H16M19 32H26M36 10L41 12L34 34L30 35L30 30Z"/>
+            </svg>
+          </div>
+          <span class="tile-label">Exams</span>
+        </div>
+
+        <div class="tile" onclick="selectTile(this,'RMS Status')">
+          <div class="tile-icon">
+            <svg viewBox="0 0 48 48">
+              <rect x="5" y="9" width="38" height="32" rx="3"/>
+              <path d="M5 17H43M13 5V13M35 5V13"/>
+              <rect x="11" y="22" width="5" height="5" rx="1"/>
+              <rect x="21" y="22" width="5" height="5" rx="1"/>
+              <rect x="31" y="22" width="5" height="5" rx="1"/>
+              <rect x="11" y="31" width="5" height="5" rx="1"/>
+              <rect x="21" y="31" width="5" height="5" rx="1"/>
+            </svg>
+          </div>
+          <span class="tile-label">RMS Status</span>
+        </div>
+
+        <div class="tile" onclick="selectTile(this,'Practical Feedback')">
+          <div class="tile-icon">
+            <svg viewBox="0 0 48 48">
+              <rect x="5" y="7" width="38" height="31" rx="2"/>
+              <path d="M5 15H43M12 4V11M21 4V11M30 4V11M39 4V11 M24 19L26 24L31 24L27 27L29 32L24 29L19 32L21 27L17 24L22 24Z"/>
+              <circle cx="14" cy="39" r="5"/>
+              <circle cx="24" cy="40" r="5"/>
+              <circle cx="34" cy="39" r="5"/>
+            </svg>
+          </div>
+          <span class="tile-label">Practical<br>Feedback</span>
+        </div>
+
+        <div class="tile" onclick="selectTile(this,'View Marks')">
+          <span class="tile-badge">X</span>
+          <div class="tile-icon">
+            <svg viewBox="0 0 48 48">
+              <rect x="5" y="17" width="15" height="19" rx="1"/>
+              <rect x="28" y="17" width="15" height="19" rx="1"/>
+              <rect x="16" y="5" width="16" height="16" rx="2"/>
+              <circle cx="24" cy="11" r="3"/>
+              <path d="M19 18Q24 13 29 18M9 22H16M9 26H16M9 30H15M32 22H39M32 26H39M32 30H38"/>
+            </svg>
+          </div>
+          <span class="tile-label">View Marks</span>
+        </div>
+
+        <div class="tile" onclick="selectTile(this,'Hostel Leave Slip')">
+          <span class="tile-badge">X</span>
+          <div class="tile-icon">
+            <svg viewBox="0 0 48 48">
+              <rect x="5" y="17" width="15" height="19" rx="1"/>
+              <rect x="28" y="17" width="15" height="19" rx="1"/>
+              <rect x="16" y="5" width="16" height="16" rx="2"/>
+              <circle cx="24" cy="11" r="3"/>
+              <path d="M19 18Q24 13 29 18M9 22H16M9 26H16M9 30H15M32 22H39M32 26H39M32 30H38"/>
+            </svg>
+          </div>
+          <span class="tile-label">Hostel Leave<br>Slip</span>
+        </div>
+
+        <div class="tile" onclick="openMess()">
+          <span class="tile-badge">X</span>
+          <div class="tile-icon">
+            <svg viewBox="0 0 48 48">
+              <rect x="5" y="17" width="15" height="19" rx="1"/>
+              <rect x="28" y="17" width="15" height="19" rx="1"/>
+              <rect x="16" y="5" width="16" height="16" rx="2"/>
+              <circle cx="24" cy="11" r="3"/>
+              <path d="M19 18Q24 13 29 18M9 22H16M9 26H16M9 30H15M32 22H39M32 26H39M32 30H38"/>
+            </svg>
+          </div>
+          <span class="tile-label">Mess Food<br>Scanner</span>
+        </div>
+
+      </div>
+    </main>
+
+    <nav class="nav">
+      <button class="nav-item active" onclick="dashboardNav(this,'Dashboard')">
+        <svg viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7"/>
+          <rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/>
+        </svg>
+        <span>Dashboard</span>
+      </button>
+
+      <button class="nav-item" onclick="dashboardNav(this,'Happenings')">
+        <svg viewBox="0 0 24 24">
+          <rect x="4" y="3" width="15" height="17" rx="1"/>
+          <path d="M8 7H15M8 11H15M8 15H15M2 6V22H17M8 4V2H21V18"/>
+        </svg>
+        <span>Happenings</span>
+      </button>
+
+      <button class="nav-item" onclick="dashboardNav(this,'RMS')">
+        <svg viewBox="0 0 24 24">
+          <path d="M14 4H20V20H4V4H10M8 12L10 14L21 3M8 7H11"/>
+        </svg>
+        <span>RMS</span>
+      </button>
+
+      <button class="nav-item" onclick="dashboardNav(this,'View Marks')">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 6H21M4 12H21M4 18H21"/>
+        </svg>
+        <span>View Marks</span>
+      </button>
+    </nav>
+  </section>
+
+  <!-- MESS COUPON SCREEN -->
+  <section id="messScreen" class="screen">
+
+    <header class="topbar">
+      <button class="back" aria-label="Back" onclick="showScreen('dashboard')">‹</button>
+      <div class="title">Mess Coupon</div>
+      <button class="right-action" onclick="showToast('Meal History will be added next.')">Meal History</button>
+    </header>
+
+    <main class="mess-body">
+
+      <section class="student-card">
+
+        <img
+          id="studentPhoto"
+          class="student-photo"
+          src="manikanta.png"
+          alt="Kottana Manikanta"
+        >
+
+        <div class="student-name">
+          <span id="studentName">Kottana Manikanta</span>
+          <span id="studentId">12523778</span>
+        </div>
+
+        <div class="student-detail">
+          <strong>Father's Name</strong>
+          <span id="fatherName">Kottana Adinarayana (9912284335)</span>
+        </div>
+
+        <div class="student-detail">
+          <strong>Mother's Name</strong>
+          <span id="motherName">Kottana Lakshmi (8184809911)</span>
+        </div>
+
+        <div class="student-detail">
+          <strong>Program Name</strong>
+          <span id="programName">P132:B.Tech. (Computer Science and Engineering)(2025)</span>
+        </div>
+
+        <div class="student-detail">
+          <strong>Hostel</strong>
+          <span id="hostelName">Boys Hostel-05- C315-Bed B (Standard Air Cooled 5 Seater)</span>
+        </div>
+
+      </section>
+
+      <section class="meal-panel">
+        <p class="meal-instruction">
+          Tap on the meal name to scan<br>
+          and avail food.
+        </p>
+
+        <button class="rate-button" onclick="openFeedback()">
+          <span class="star">★</span> RATE US
+        </button>
+
+        <div class="meal-buttons">
+          <button class="meal-button" onclick="chooseMeal('Breakfast')">BreakFast →</button>
+          <button class="meal-button" onclick="chooseMeal('Lunch')">Lunch →</button>
+          <button class="meal-button" onclick="chooseMeal('Dinner')">Dinner →</button>
+        </div>
+      </section>
+
+    </main>
+  </section>
+
+  <!-- MESS FEEDBACK -->
+  <div id="feedbackOverlay" class="feedback-overlay"
+       role="dialog" aria-modal="true" aria-labelledby="feedbackTitle">
+
+    <div class="feedback-dim" onclick="closeFeedback()"></div>
+
+    <section class="feedback-panel">
+
+      <header class="feedback-bar">
+        <span>Feedback</span>
+        <button class="feedback-close" aria-label="Close feedback" onclick="closeFeedback()">×</button>
+      </header>
+
+      <div class="feedback-content">
+        <h2 id="feedbackTitle">Mess Feedback</h2>
+        <p>Tell us how we did!</p>
+
+        <div class="stars" role="group" aria-label="Rate your mess experience">
+          <button class="star-choice" aria-label="1 star" onclick="rateStar(1)">☆</button>
+          <button class="star-choice" aria-label="2 stars" onclick="rateStar(2)">☆</button>
+          <button class="star-choice" aria-label="3 stars" onclick="rateStar(3)">☆</button>
+          <button class="star-choice" aria-label="4 stars" onclick="rateStar(4)">☆</button>
+          <button class="star-choice" aria-label="5 stars" onclick="rateStar(5)">☆</button>
+        </div>
+
+        <p id="ratingNote" class="feedback-note" hidden></p>
+      </div>
+
+    </section>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+  <div class="system-nav"><div class="gesture"></div></div>
+
+</div>
+
+<script>
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(screen => {
+    screen.classList.remove('active');
+  });
+
+  document.getElementById(id).classList.add('active');
+  closeFeedback();
+}
+
+function openMess() {
+  showScreen('messScreen');
+}
+
+function openFeedback() {
+  document.getElementById('feedbackOverlay').classList.add('open');
+
+  document.querySelectorAll('.star-choice').forEach(star => {
+    star.textContent = '☆';
+    star.classList.remove('chosen');
+  });
+
+  const note = document.getElementById('ratingNote');
+  note.hidden = true;
+  note.textContent = '';
+}
+
+function closeFeedback() {
+  document.getElementById('feedbackOverlay').classList.remove('open');
+}
+
+function rateStar(rating) {
+  document.querySelectorAll('.star-choice').forEach((star, index) => {
+    const selected = index < rating;
+    star.textContent = selected ? '★' : '☆';
+    star.classList.toggle('chosen', selected);
+  });
+
+  const note = document.getElementById('ratingNote');
+  note.hidden = false;
+  note.textContent = `You selected ${rating} out of 5 stars.`;
+}
+
+function chooseMeal(meal) {
+  showToast(`${meal} selected. Actual meal scanning will be connected next.`);
+}
+
+let toastTimer;
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+function selectTile(tile, name) {
+  if (name === 'Mess Food Scanner') {
+    openMess();
+    return;
+  }
+
+  document.querySelectorAll('.tile').forEach(item => {
+    item.classList.remove('selected');
+  });
+
+  tile.classList.add('selected');
+  showToast(`${name} selected.`);
+}
+
+function dashboardNav(button, page) {
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.classList.remove('active');
+  });
+
+  button.classList.add('active');
+
+  if (page !== 'Dashboard') {
+    showToast(`${page} page will be implemented next.`);
+  }
+}
+
+function addTile() {
+  const name = prompt('Enter the name of the new tile:');
+  if (!name || !name.trim()) return;
+
+  const tile = document.createElement('div');
+  tile.className = 'tile';
+
+  const icon = document.createElement('div');
+  icon.className = 'tile-icon';
+  icon.innerHTML = '<svg viewBox="0 0 48 48"><rect x="9" y="5" width="30" height="38" rx="3"/><path d="M15 15H33M15 22H33M15 29H29"/></svg>';
+
+  const label = document.createElement('span');
+  label.className = 'tile-label';
+  label.textContent = name.trim();
+
+  tile.append(icon, label);
+  tile.onclick = () => selectTile(tile, name.trim());
+
+  document.getElementById('tilesGrid').appendChild(tile);
+}
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') closeFeedback();
+});
+</script>
+
+</body>
+</html>

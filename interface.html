@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +6,278 @@
 <title>Student Dashboard</title>
 
 <style>
+  .profile-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  background: #f8f8f8;
+  color: #333;
+}
+
+.profile-screen.active {
+  display: flex;
+}
+
+.profile-header {
+  min-height: 76px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  background: #303030;
+  color: white;
+}
+
+.profile-header span {
+  font-size: 22px;
+}
+
+.profile-back {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 36px;
+  cursor: pointer;
+}
+
+.profile-qr {
+  background: #ff851b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 18px;
+}
+
+.profile-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.profile-hero {
+  text-align: center;
+  padding: 30px 12px;
+  margin-bottom: 36px;
+  border-radius: 12px;
+  background: linear-gradient(110deg, #ff8578, #ffd47b);
+}
+
+.profile-photo {
+  width: 150px;
+  height: 175px;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+.profile-hero h2 {
+  font-size: 20px;
+}
+
+.profile-hero p {
+  overflow-wrap: anywhere;
+}
+
+.profile-section {
+  margin-bottom: 24px;
+  background: white;
+  box-shadow: 0 2px 5px #0002;
+}
+
+.profile-section h3 {
+  margin: 0;
+  padding: 18px 10px;
+  text-align: center;
+  color: white;
+  background: #303030;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.profile-details {
+  padding: 18px 20px;
+}
+
+.profile-details p {
+  margin: 12px 0 22px;
+  color: #808080;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.profile-details p:last-child {
+  margin-bottom: 12px;
+}
+
+.profile-details strong {
+  color: #777;
+  font-weight: 600;
+}
+  /* PROFILE SCREEN */
+.profile-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  flex-direction: column;
+  background: #f7f7f7;
+  color: #333;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.profile-screen.active {
+  display: flex;
+}
+
+.profile-header {
+  flex-shrink: 0;
+  height: 76px;
+  background: #303030;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  box-shadow: 0 2px 5px #0003;
+}
+
+.profile-header > span {
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.profile-back {
+  border: 0;
+  background: transparent;
+  color: white;
+  font-size: 36px;
+  cursor: pointer;
+  padding: 4px 10px;
+}
+
+.profile-qr {
+  border: 0;
+  background: #ff851b;
+  color: white;
+  font-size: 18px;
+  padding: 15px 13px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.profile-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.profile-hero {
+  background: linear-gradient(110deg, #ff8578, #ffd47b);
+  border-radius: 12px;
+  padding: 30px 14px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.profile-photo {
+  width: 150px;
+  height: 175px;
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+  margin: 0 auto 12px;
+  background: #eee;
+}
+
+.profile-hero h2 {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 10px 0 14px;
+}
+
+.profile-hero p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 8px 0;
+  overflow-wrap: anywhere;
+}
+
+.profile-hero .student-id {
+  font-size: 14px;
+}
+
+.profile-section {
+  background: #fff;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 5px #0002;
+}
+
+.profile-section h3 {
+  background: #303030;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  margin: 0;
+  padding: 18px 10px;
+}
+
+.profile-details {
+  padding: 24px 20px;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 22px;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.profile-field:last-child {
+  margin-bottom: 0;
+}
+
+.profile-field strong {
+  color: #777;
+  font-weight: 600;
+}
+
+.profile-field span {
+  color: #808080;
+}
+
+.profile-screen button {
+  font-family: inherit;
+}
+
+@media (max-width: 420px) {
+  .profile-content {
+    padding: 12px;
+  }
+
+  .profile-hero {
+    padding: 24px 12px;
+    margin-bottom: 28px;
+  }
+
+  .profile-photo {
+    width: 145px;
+    height: 170px;
+  }
+
+  .profile-field {
+    font-size: 15px;
+  }
+}
 :root {
   --coral: #ff827b;
   --peach: #ffc58e;
@@ -640,16 +911,7 @@ button {
 }
 
 .system-nav {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 24px;
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 30;
+  display: none;
 }
 
 .gesture {
@@ -692,16 +954,592 @@ button {
     font-size: 20px;
   }
 }
+
+/* LEFT SLIDE-OUT MENU */
+/* LEFT SLIDE-OUT MENU */
+
+.menu-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.30);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.menu-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.side-menu {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+
+  width: 65%;
+  max-width: 270px;
+  min-width: 0;
+
+  background: #fff;
+  z-index: 101;
+  transform: translateX(-100%);
+  transition: transform 0.28s ease;
+
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: 5px 0 18px rgba(0, 0, 0, 0.18);
+}
+
+.side-menu.open {
+  transform: translateX(0);
+}
+
+/* PROFILE */
+
+.side-menu-profile {
+  flex: 0 0 auto;
+  padding: 18px 12px 12px;
+  text-align: center;
+  background: linear-gradient(110deg, #ff827b, #ffdb78);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.side-menu-profile img {
+  display: block;
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #aaa;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
+  margin: 0 auto 6px;
+}
+
+.side-menu-name {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
+  margin-bottom: 5px;
+  color: #111;
+  overflow-wrap: anywhere;
+}
+
+.side-menu-uid {
+  font-size: 13px;
+  margin-bottom: 5px;
+  color: #111;
+}
+
+.side-menu-program {
+  font-size: 11px;
+  line-height: 1.3;
+  color: #111;
+  overflow-wrap: anywhere;
+}
+
+/* SEARCH */
+
+.side-menu-search {
+  flex: 0 0 auto;
+  padding: 8px 10px;
+  background: #fff;
+}
+
+.side-menu-search input {
+  display: block;
+  width: 100%;
+  height: 35px;
+  border: none;
+  outline: none;
+  border-radius: 12px;
+  padding: 0 12px;
+  background: #eee;
+  font-size: 13px;
+  color: #333;
+}
+
+.side-menu-search input:focus {
+  box-shadow: 0 0 0 1px #ffb58c;
+}
+
+/* SCROLLABLE MENU LIST */
+
+.side-menu-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  background: #fff;
+}
+
+.side-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  width: 100%;
+  min-height: 46px;
+  padding: 8px 12px;
+
+  border: none;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+
+  color: #626262;
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.side-menu-item:active {
+  background: #f5f5f5;
+}
+
+.side-menu-icon {
+  width: 22px;
+  flex: 0 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #555;
+}
+
+/* LOGOUT */
+
+.side-menu-logout {
+  flex: 0 0 auto;
+  padding: 8px 10px 12px;
+  border-top: 1px solid #eee;
+  background: #fff;
+}
+
+.side-menu-logout button {
+  width: 100%;
+  height: 36px;
+  border: none;
+  border-radius: 22px;
+  background: linear-gradient(110deg, #ff827b, #ffdb78);
+  color: #111;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 3px 6px #0003;
+}
+
+.side-menu-logout button:active {
+  transform: scale(0.98);
+}
+
+/* SMALL SCREENS */
+
+@media (max-width: 360px) {
+  .side-menu {
+    width: 75%;
+    max-width: 270px;
+    min-width: 0;
+  }
+
+  .side-menu-profile {
+    padding: 14px 10px 10px;
+  }
+
+  .side-menu-item {
+    min-height: 42px;
+    padding: 7px 10px;
+    font-size: 12px;
+    gap: 10px;
+  }
+
+  .side-menu-icon {
+    width: 20px;
+    flex-basis: 20px;
+    font-size: 17px;
+  }
+}
+/* FEATURE SCREENS */
+.feature-screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  background: #fafafa;
+}
+
+.feature-screen.active {
+  display: block;
+}
+
+.feature-header {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 32px 0;
+  background: white;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 5px #0001;
+}
+
+.feature-header .hamburger {
+  flex-shrink: 0;
+}
+
+.feature-header h1 {
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.header-spacer {
+  width: 23px;
+}
+
+.feature-body {
+  position: absolute;
+  top: 100px;
+  bottom: 105px;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.feature-nav {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  height: 81px;
+  background: white;
+  border-top: 1px solid #ddd;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  z-index: 5;
+}
+
+.feature-nav .nav-item {
+  gap: 4px;
+  font-size: 11px;
+}
+
+.feature-nav .nav-item > span:first-child {
+  font-size: 24px;
+}
+
+.feature-nav .nav-item.active {
+  color: #ff8318;
+}
+
+/* HAPPENINGS */
+.news-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 18px 15px;
+  margin-bottom: 8px;
+  background: white;
+  border-bottom: 1px solid #eee;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.news-image {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #f4e8d9;
+  color: #a36c3c;
+  font-size: 11px;
+  text-align: center;
+}
+
+/* RMS */
+.rms-card {
+  padding: 18px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px #0002;
+}
+
+.rms-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 17px;
+  color: #777;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.rms-check input {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  accent-color: #ffbd91;
+}
+
+.rms-proceed {
+  display: block;
+  margin: 25px auto 5px;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(110deg, #ff827b, #ffdb78);
+  color: #333;
+  box-shadow: 0 3px 6px #0002;
+  font-size: 14px;
+}
+
+/* VIEW MARKS */
+.marks-body {
+  padding: 10px;
+}
+
+.semester {
+  margin-bottom: 3px;
+  background: white;
+}
+
+.semester-header {
+  width: 100%;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 10px;
+  border: 3px solid white;
+  background: linear-gradient(110deg, #ff827b, #ffdb78);
+  color: #292929;
+  text-align: left;
+  font-size: 14px;
+}
+
+.semester-arrow {
+  flex-shrink: 0;
+  font-size: 23px;
+  transition: transform 0.2s;
+}
+
+.semester.open .semester-arrow {
+  transform: rotate(180deg);
+}
+
+.semester-details {
+  display: none;
+  padding: 15px;
+  background: white;
+  color: #666;
+  font-size: 13px;
+}
+
+.semester.open .semester-details {
+  display: block;
+}
+
+@media (max-width: 360px) {
+  .feature-header {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .news-card {
+    gap: 12px;
+    padding: 15px 10px;
+    font-size: 13px;
+  }
+
+  .news-image {
+    width: 58px;
+    height: 58px;
+    flex-basis: 58px;
+  }
+
+  .rms-card {
+    padding: 14px;
+  }
+}
+/* PROFILE SCREEN — compact mobile layout */
+#profileScreen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 200;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  background: #f8f8f8;
+  box-sizing: border-box;
+}
+#profileScreen.active { display: flex; }
+#profileScreen .profile-header {
+  position: relative;
+  flex: 0 0 46px;
+  min-height: 46px;
+  height: 46px;
+  padding: 0 8px;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 2;
+}
+#profileScreen .profile-header span { font-size: 13px; }
+#profileScreen .profile-back { font-size: 25px; }
+#profileScreen .profile-qr { padding: 7px 8px; font-size: 11px; border-radius: 5px; }
+#profileScreen .profile-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 7px;
+}
+#profileScreen .profile-hero,
+#profileScreen .profile-section,
+#profileScreen .profile-details { width: 100%; box-sizing: border-box; }
+#profileScreen .profile-hero {
+  min-height: 0;
+  padding: 12px 9px;
+  margin: 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  text-align: center;
+}
+#profileScreen .profile-photo {
+  display: block;
+  width: 80px;
+  height: 88px;
+  object-fit: cover;
+  border-radius: 9px;
+  margin: 0 auto 5px;
+}
+#profileScreen .profile-hero h2 { font-size: 13px; margin: 4px 0 5px; }
+#profileScreen .profile-hero p { font-size: 10px; line-height: 1.35; margin: 3px 0; overflow-wrap: anywhere; }
+#profileScreen .profile-section { margin-bottom: 10px; }
+#profileScreen .profile-section h3 { padding: 8px 7px; font-size: 12px; }
+#profileScreen .profile-details { padding: 9px 10px; }
+#profileScreen .profile-details p,
+#profileScreen .profile-field { font-size: 10px; line-height: 1.35; margin: 0 0 8px; overflow-wrap: anywhere; }
+#profileScreen .profile-details p:last-child,
+#profileScreen .profile-field:last-child { margin-bottom: 0; }
+#profileScreen .profile-field { gap: 2px; }
+body.profile-open .side-menu,
+body.profile-open .menu-overlay { display: none !important; }
+@media (min-width: 600px) {
+  /* Keep the app's phone-sized layout centered on desktop. */
+  #profileScreen .profile-content { padding: 7px; }
+}
 </style>
 </head>
 
 <body>
+  
 <div class="app">
+  
+<!-- SIDEBAR OVERLAY -->
+<div id="menuOverlay" class="menu-overlay" onclick="closeSideMenu()"></div>
+
+<!-- LEFT SIDEBAR -->
+<aside id="sideMenu" class="side-menu" aria-label="Student menu">
+
+  <div class="side-menu-profile">
+      <img
+    src="manikanta.png"
+    alt="Student profile"
+    onclick="openProfile()"
+    style="cursor: pointer;"
+  >
+    <div class="side-menu-name">Kottana Manikanta</div>
+    <div class="side-menu-uid">12523778</div>
+    <div class="side-menu-program">
+      P132:B.Tech. (Computer Science and Engineering)(2025)
+    </div>
+  </div>
+
+  <div class="side-menu-search">
+    <input
+      id="menuSearch"
+      type="search"
+      placeholder="⌕  Search"
+      oninput="filterSideMenu(this.value)"
+    >
+  </div>
+
+  <div class="side-menu-list" id="sideMenuList">
+    <button class="side-menu-item" onclick="menuAction('Attendance')"><span class="side-menu-icon">♟</span>Attendance</button>
+    <button class="side-menu-item" onclick="menuAction('Placement Barcode Scanner')"><span class="side-menu-icon">▦</span>Placement Barcode Scanner</button>
+    <button class="side-menu-item" onclick="menuAction('Book Appointment')"><span class="side-menu-icon">♧</span>Book Appointment</button>
+    <button class="side-menu-item" onclick="menuAction('Transport Preference')"><span class="side-menu-icon">▤</span>Transport Preference</button>
+    <button class="side-menu-item" onclick="menuAction('Change UMS Password')"><span class="side-menu-icon">⇥</span>Change UMS Password</button>
+    <button class="side-menu-item" onclick="menuAction('View Marks')"><span class="side-menu-icon">▤</span>View Marks</button>
+    <button class="side-menu-item" onclick="menuAction('Event Attendance')"><span class="side-menu-icon">▣</span>Event Attendance</button>
+    <button class="side-menu-item" onclick="menuAction('Doctor Appointment')"><span class="side-menu-icon">⚕</span>Doctor Appointment</button>
+    <button class="side-menu-item" onclick="menuAction('Document Upload')"><span class="side-menu-icon">▧</span>Document Upload</button>
+    <button class="side-menu-item" onclick="menuAction('Placement Drive')"><span class="side-menu-icon">➜</span>Placement Drive</button>
+    <button class="side-menu-item" onclick="menuAction('Elective Polling')"><span class="side-menu-icon">♧</span>Elective Polling</button>
+    <button class="side-menu-item" onclick="menuAction('Fee Statement')"><span class="side-menu-icon">◉</span>Fee Statement</button>
+    <button class="side-menu-item" onclick="menuAction('Guest Lecture/Workshop Feedback')"><span class="side-menu-icon">▧</span>Guest Lecture/Workshop Feedback</button>
+    <button class="side-menu-item" onclick="menuAction('List of Holidays')"><span class="side-menu-icon">▤</span>List of Holidays</button>
+    <button class="side-menu-item" onclick="menuAction('Fee Payment')"><span class="side-menu-icon">₹</span>Fee Payment</button>
+    <button class="side-menu-item" onclick="menuAction('App Feedback')"><span class="side-menu-icon">☷</span>App Feedback</button>
+    <button class="side-menu-item" onclick="menuAction('Virtual Tour')"><span class="side-menu-icon">◎</span>Virtual Tour</button>
+    <button class="side-menu-item" onclick="menuAction('Library Search')"><span class="side-menu-icon">▤</span>Library Search</button>
+    <button class="side-menu-item" onclick="menuAction('Emergency Contact Numbers')"><span class="side-menu-icon">☎</span>Emergency Contact Numbers</button>
+    <button class="side-menu-item" onclick="menuAction('Backlog Registration')"><span class="side-menu-icon">▤</span>Backlog Registration</button>
+    <button class="side-menu-item" onclick="menuAction('Hostel Leave Slip')"><span class="side-menu-icon">♙</span>Hostel Leave Slip</button>
+    <button class="side-menu-item" onclick="menuAction('Residential Reporting Slip')"><span class="side-menu-icon">▦</span>Residential Reporting Slip</button>
+    <button class="side-menu-item" onclick="menuAction('Accommodation Details')"><span class="side-menu-icon">☎</span>Accommodation Details</button>
+    <button class="side-menu-item" onclick="menuAction('Uni Hospital Help Line')"><span class="side-menu-icon">☎</span>Uni Hospital Help Line</button>
+    <button class="side-menu-item" onclick="menuAction('Inventory')"><span class="side-menu-icon">▤</span>Inventory</button>
+    <button class="side-menu-item" onclick="menuAction('Laboratory Dashboard')"><span class="side-menu-icon">⚒</span>Laboratory Dashboard</button>
+    <button class="side-menu-item" onclick="menuAction('Practical Conduct Feedback')"><span class="side-menu-icon">▤</span>Practical Conduct Feedback</button>
+    <button class="side-menu-item" onclick="menuAction('Library Resource Feedback')"><span class="side-menu-icon">☞</span>Library Resource Feedback</button>
+    <button class="side-menu-item" onclick="menuAction('Issued Books')"><span class="side-menu-icon">▤</span>Issued Books</button>
+    <button class="side-menu-item" onclick="menuAction('Make Up Adjustment')"><span class="side-menu-icon">☷</span>Make Up Adjustment</button>
+    <button class="side-menu-item" onclick="menuAction('Mentor Meeting Attendance')"><span class="side-menu-icon">♙</span>Mentor Meeting Attendance</button>
+    <button class="side-menu-item" onclick="menuAction('Mentor Meeting Details')"><span class="side-menu-icon">▤</span>Mentor Meeting Details</button>
+    <button class="side-menu-item" onclick="menuAction('Feedback on Mentor Meeting')"><span class="side-menu-icon">▤</span>Feedback on Mentor Meeting</button>
+    <button class="side-menu-item" onclick="menuAction('PEP Activities')"><span class="side-menu-icon">➜</span>PEP Activities</button>
+    <button class="side-menu-item" onclick="menuAction('Placement Drive Summary')"><span class="side-menu-icon">▧</span>Placement Drive Summary</button>
+    <button class="side-menu-item" onclick="menuAction('Student Class Feedback')"><span class="side-menu-icon">▤</span>Student Class Feedback</button>
+    <button class="side-menu-item" onclick="menuAction('SPR Course Progress')"><span class="side-menu-icon">⚒</span>SPR Course Progress</button>
+    <button class="side-menu-item" onclick="menuAction('Event QR Scanner/Tier Request')"><span class="side-menu-icon">▤</span>Event QR Scanner/Tier Request</button>
+    <button class="side-menu-item" onclick="menuAction('Exam Attendance')"><span class="side-menu-icon">▤</span>Exam Attendance</button>
+    <button class="side-menu-item" onclick="menuAction('Laundry')"><span class="side-menu-icon">▤</span>Laundry</button>
+    <button class="side-menu-item" onclick="menuAction('Open Minor Area Preference')"><span class="side-menu-icon">▧</span>Open Minor Area Preference</button>
+    <button class="side-menu-item" onclick="menuAction('Report Card')"><span class="side-menu-icon">▤</span>Report Card</button>
+    <button class="side-menu-item" onclick="menuAction('Time table')"><span class="side-menu-icon">▦</span>Time table</button>
+    <button class="side-menu-item" onclick="menuAction('Entry Exit Logs')"><span class="side-menu-icon">▤</span>Entry Exit Logs</button>
+    <button class="side-menu-item" onclick="menuAction('Vendor Facility Search')"><span class="side-menu-icon">▤</span>Vendor Facility Search</button>
+    <button class="side-menu-item" onclick="menuAction('Food Shops')"><span class="side-menu-icon">▤</span>Food Shops</button>
+  </div>
+
+  <div class="side-menu-logout">
+    <button onclick="menuAction('Logout')">LOGOUT　⇥</button>
+  </div>
+
+</aside>
+
 
   <!-- DASHBOARD -->
   <section id="dashboard" class="screen active">
     <header class="dash-header">
-      <div class="hamburger"><span></span><span></span><span></span></div>
+      <div class="hamburger" onclick="openSideMenu()" aria-label="Open menu" role="button" tabindex="0">
+  <span></span><span></span><span></span>
+</div>
       <h1>Dashboard</h1>
 
       <!-- UPDATED BELL ICON WITH NOTIFICATION COUNT -->
@@ -720,25 +1558,65 @@ button {
         <span class="dost">Your Dost</span>
       </div>
 
-      <div class="timetable">
-        <article class="class-card">
-          <div class="class-info">
-            <h3>INT335</h3>
-            <p>34-102A</p>
-            <span class="present">Present</span>
-          </div>
-          <div class="class-time">11:50-12:40 AM</div>
-        </article>
 
-        <article class="class-card">
-          <div class="class-info">
-            <h3>CSE423</h3>
-            <p>34-102A</p>
-            <span class="present">Present</span>
-          </div>
-          <div class="class-time">11:00-11:50 AM</div>
-        </article>
-      </div>
+<div class="timetable">
+
+  <article class="class-card">
+    <div class="class-info">
+      <h3>INT335</h3>
+      <p>34-102A</p>
+      <span class="present">Present</span>
+    </div>
+    <div class="class-time">09:00-09:50 AM</div>
+  </article>
+
+  <article class="class-card">
+    <div class="class-info">
+      <h3>CSE423</h3>
+      <p>34-102A</p>
+      <span class="present">Present</span>
+    </div>
+    <div class="class-time">11:00-11:50 AM</div>
+  </article>
+
+  <article class="class-card">
+    <div class="class-info">
+      <h3>CSE202</h3>
+      <p>34-102A</p>
+      <span class="present">Present</span>
+    </div>
+    <div class="class-time">12:40-01:30 PM</div>
+  </article>
+
+  <article class="class-card">
+    <div class="class-info">
+      <h3>CSE205</h3>
+      <p>34-402</p>
+      <span class="present">Present</span>
+    </div>
+    <div class="class-time">02:20-03:10 PM</div>
+  </article>
+
+  <article class="class-card">
+    <div class="class-info">
+      <h3>MTH401</h3>
+      <p>34-402</p>
+      <span class="present">Present</span>
+    </div>
+    <div class="class-time">03:10-04:00 PM</div>
+  </article>
+
+  <article class="class-card">
+    <div class="class-info">
+      <h3>PEL121</h3>
+      <p>34-102A</p>
+      <span class="present">Present</span>
+    </div>
+    <div class="class-time">04:00-04:50 PM</div>
+  </article>
+
+</div>
+
 
       <div class="tiles-heading">
         <h2>Add More Tiles</h2>
@@ -932,6 +1810,227 @@ button {
       </button>
     </nav>
   </section>
+  <!-- HAPPENINGS SCREEN -->
+<section id="happeningsScreen" class="feature-screen">
+
+  <header class="feature-header">
+    <div class="hamburger" onclick="openSideMenu()">
+      <span></span><span></span><span></span>
+    </div>
+    <h1>Happenings</h1>
+    <div class="header-spacer"></div>
+  </header>
+
+  <main class="feature-body">
+    <article class="news-card">
+      <div class="news-image">LPU NEWS</div>
+      <div>LPU Hosts International Conference on Multi-Functional Advanced Materials (MAM-2026), Advancing Research and Innovation for a Sustainable Future</div>
+    </article>
+
+    <article class="news-card">
+      <div class="news-image">RESEARCH</div>
+      <div>56 LPU Faculty among the World’s Top 2% Scientists in 2026, 23 Ranked in the Top 100 Research Subfields</div>
+    </article>
+
+    <article class="news-card">
+      <div class="news-image">GREEN LPU</div>
+      <div>LPU’s Ecological Restoration Efforts with 8,572 Seed Balls and 130 km of Green Corridors Earn Platinum Green Impact Award</div>
+    </article>
+
+    <article class="news-card">
+      <div class="news-image">EVENTS</div>
+      <div>Celebrating 25 Years of LPU Excellence and 5 Years of AICGS! Embracing Cultures, Inspiring Global Togetherness</div>
+    </article>
+
+    <article class="news-card">
+      <div class="news-image">CAMPUS</div>
+      <div>Admissions for LPU Distance and Online Mode Programmes for the August 2026 Session Closing Soon</div>
+    </article>
+
+    <article class="news-card">
+      <div class="news-image">EVENTS</div>
+      <div>Dr. Ashok Kumar Mittal Brings Together Leaders, Faith Traditions, Country Ambassadors and Sporting Champions</div>
+    </article>
+
+    <article class="news-card">
+      <div class="news-image">SPORTS</div>
+      <div>LPU Athletes Contributed 62% of India’s Gold Medal Haul at Asian Games 2026 in Aichi-Nagoya, Japan</div>
+    </article>
+
+    <article class="news-card">
+      <div class="news-image">RANKINGS</div>
+      <div>LPU Rises to 4th in India in Times Higher Education World University Rankings 2027</div>
+    </article>
+
+    <article class="news-card">
+      <div class="news-image">HACKATHON</div>
+      <div>Record Participation of 6,000+ Innovators and 900+ Teams Marked LPU’s Gear UP Season 5 Ahead of Smart India Hackathon</div>
+    </article>
+
+    <article class="news-card">
+      <div class="news-image">LPU</div>
+      <div>SUPREMACY PAGEANTS AUDITIONS 2026 | WHERE TALENT MET THE SPOTLIGHT!</div>
+    </article>
+  </main>
+
+  <nav class="feature-nav">
+    <button class="nav-item" onclick="dashboardNav(this,'Dashboard')">
+      <span>▦</span><span>Dashboard</span>
+    </button>
+    <button class="nav-item active" onclick="dashboardNav(this,'Happenings')">
+      <span>▤</span><span>Happenings</span>
+    </button>
+    <button class="nav-item" onclick="dashboardNav(this,'RMS')">
+      <span>☑</span><span>RMS</span>
+    </button>
+    <button class="nav-item" onclick="dashboardNav(this,'View Marks')">
+      <span>☷</span><span>View Marks</span>
+    </button>
+  </nav>
+</section>
+
+
+<!-- RMS SCREEN -->
+<section id="rmsScreen" class="feature-screen">
+
+  <header class="feature-header">
+    <div class="hamburger" onclick="openSideMenu()">
+      <span></span><span></span><span></span>
+    </div>
+    <h1>RMS</h1>
+    <div class="header-spacer"></div>
+  </header>
+
+  <main class="feature-body">
+    <div class="rms-card">
+
+      <label class="rms-check">
+        <input type="checkbox">
+        <span>I have not shared my UMS password with anyone.</span>
+      </label>
+
+      <label class="rms-check">
+        <input type="checkbox">
+        <span>I am responsible for the content typed in query.</span>
+      </label>
+
+      <label class="rms-check">
+        <input type="checkbox">
+        <span>I understand that necessary disciplinary action can be initiated against me in case of use of derogatory words or false statements against any Student/Faculty/Staff/Higher Authority.</span>
+      </label>
+
+      <label class="rms-check">
+        <input type="checkbox">
+        <span>The information given by me regarding the complaint/request is true to the best of my knowledge and if found false/wrong, necessary disciplinary action can be initiated against me.</span>
+      </label>
+
+      <label class="rms-check">
+        <input type="checkbox">
+        <span>I have read the policy / UMS Notification related to the concerned matter already before submitting the RMS and I am unable to find the answer related to my query.</span>
+      </label>
+
+      <button class="rms-proceed" onclick="proceedRMS()">
+        Agree &amp; Proceed
+      </button>
+
+    </div>
+  </main>
+
+  <nav class="feature-nav">
+    <button class="nav-item" onclick="dashboardNav(this,'Dashboard')">
+      <span>▦</span><span>Dashboard</span>
+    </button>
+    <button class="nav-item" onclick="dashboardNav(this,'Happenings')">
+      <span>▤</span><span>Happenings</span>
+    </button>
+    <button class="nav-item active" onclick="dashboardNav(this,'RMS')">
+      <span>☑</span><span>RMS</span>
+    </button>
+    <button class="nav-item" onclick="dashboardNav(this,'View Marks')">
+      <span>☷</span><span>View Marks</span>
+    </button>
+  </nav>
+</section>
+
+
+<!-- VIEW MARKS SCREEN -->
+<section id="marksScreen" class="feature-screen">
+
+  <header class="feature-header">
+    <div class="hamburger" onclick="openSideMenu()">
+      <span></span><span></span><span></span>
+    </div>
+    <h1>View Marks</h1>
+    <div class="header-spacer"></div>
+  </header>
+
+  <main class="feature-body marks-body">
+
+    <div class="semester">
+      <button class="semester-header" onclick="toggleSemester(this)">
+        <span>125261 - (First Year, Semester 1)</span>
+        <span class="semester-arrow">⌄</span>
+      </button>
+      <div class="semester-details">No marks data is connected yet.</div>
+    </div>
+
+    <div class="semester">
+      <button class="semester-header" onclick="toggleSemester(this)">
+        <span>125262 - (First Year, Semester 2)</span>
+        <span class="semester-arrow">⌄</span>
+      </button>
+      <div class="semester-details">No marks data is connected yet.</div>
+    </div>
+
+    <div class="semester">
+      <button class="semester-header" onclick="toggleSemester(this)">
+        <span>12526R - RPL</span>
+        <span class="semester-arrow">⌄</span>
+      </button>
+      <div class="semester-details">No RPL marks data is connected yet.</div>
+    </div>
+
+    <div class="semester">
+      <button class="semester-header" onclick="toggleSemester(this)">
+        <span>12627A - (Reappear/Backlog)</span>
+        <span class="semester-arrow">⌄</span>
+      </button>
+      <div class="semester-details">No backlog marks data is connected yet.</div>
+    </div>
+
+    <div class="semester">
+      <button class="semester-header" onclick="toggleSemester(this)">
+        <span>12627R - RPL</span>
+        <span class="semester-arrow">⌄</span>
+      </button>
+      <div class="semester-details">No RPL marks data is connected yet.</div>
+    </div>
+
+    <div class="semester">
+      <button class="semester-header" onclick="toggleSemester(this)">
+        <span>226271 - (Second Year, Semester 1)</span>
+        <span class="semester-arrow">⌄</span>
+      </button>
+      <div class="semester-details">No marks data is connected yet.</div>
+    </div>
+
+  </main>
+
+  <nav class="feature-nav">
+    <button class="nav-item" onclick="dashboardNav(this,'Dashboard')">
+      <span>▦</span><span>Dashboard</span>
+    </button>
+    <button class="nav-item" onclick="dashboardNav(this,'Happenings')">
+      <span>▤</span><span>Happenings</span>
+    </button>
+    <button class="nav-item" onclick="dashboardNav(this,'RMS')">
+      <span>☑</span><span>RMS</span>
+    </button>
+    <button class="nav-item active" onclick="dashboardNav(this,'View Marks')">
+      <span>☷</span><span>View Marks</span>
+    </button>
+  </nav>
+</section>
 
   <!-- MESS COUPON SCREEN -->
   <section id="messScreen" class="screen">
@@ -989,12 +2088,12 @@ button {
         <button class="rate-button" onclick="openFeedback()">
           <span class="star">★</span> RATE US
         </button>
-
         <div class="meal-buttons">
-          <button class="meal-button" onclick="chooseMeal('Breakfast')">BreakFast →</button>
-          <button class="meal-button" onclick="chooseMeal('Lunch')">Lunch →</button>
-          <button class="meal-button" onclick="chooseMeal('Dinner')">Dinner →</button>
-        </div>
+  <button class="meal-button" onclick="chooseMeal('Breakfast')">BreakFast →</button>
+  <button class="meal-button" onclick="chooseMeal('Lunch')">Lunch →</button>
+  <button class="meal-button" onclick="chooseMeal('Dinner')">Dinner →</button>
+    <button class="meal-button" onclick="chooseMeal('Tea')">Tea →</button>
+</div>
       </section>
 
     </main>
@@ -1029,42 +2128,179 @@ button {
       </div>
 
     </section>
+    
   </div>
 
   <div id="toast" class="toast" role="status"></div>
-  <div class="system-nav"><div class="gesture"></div></div>
+  <!-- PROFILE SCREEN -->
+<section id="profileScreen" class="profile-screen">
+
+  <header class="profile-header">
+    <button onclick="closeProfile()" class="profile-back">←</button>
+    <span>Profile</span>
+    <button class="profile-qr" onclick="showToast('QR not connected yet')">
+      (QR)
+    </button>
+  </header>
+
+  <main class="profile-content">
+
+    <div class="profile-hero">
+      <img src="manikanta.png" alt="Profile" class="profile-photo">
+      <h2>Kottana Manikanta</h2>
+      <p>P132:B.Tech. (Computer Science and Engineering)(2025)</p>
+      <p>Student ID: 12523778</p>
+    </div>
+
+    <section class="profile-section">
+      <h3>Basic</h3>
+      <div class="profile-details">
+        <p><strong>Father's Name</strong><br>Kottana Adinarayana</p>
+        <p><strong>Mother's Name</strong><br>Kottana Lakshmi</p>
+        <p><strong>Permanent Address</strong><br>10-6-50, Kailash Nagar, Gajuwaka, Visakhapatnam - 530026, Andhra Pradesh, India</p>
+        <p><strong>Correspondence Address</strong><br>10-6-50, Kailash Nagar, Gajuwaka, Visakhapatnam - 530026, Andhra Pradesh, India</p>
+        <p><strong>Contact No.</strong><br>9391275296</p>
+        <p><strong>Email</strong><br>kottanamanikanta0@gmail.com</p>
+        <p><strong>Date Of Birth</strong><br>27 Dec 2007</p>
+        <p><strong>Student Gender</strong><br>Male</p>
+      </div>
+    </section>
+
+    <section class="profile-section">
+      <h3>Academic Details</h3>
+      <div class="profile-details">
+        <p><strong>Program</strong><br>P132:B.Tech. (Computer Science and Engineering)(2025)</p>
+        <p><strong>Admission Session</strong><br>2025-1</p>
+        <p><strong>Batch</strong><br>2025</p>
+        <p><strong>Section</strong><br>K2P25DM</p>
+        <p><strong>TPC</strong><br>20339::Dr. Usha Mittal (01824520140)</p>
+      </div>
+    </section>
+
+    <section class="profile-section">
+      <h3>Hostel Details</h3>
+      <div class="profile-details">
+        <p><strong>Hostel</strong><br>Boys Hostel-05 - C315-Bed B (Standard Air Cooled 5 Seater)</p>
+        <p><strong>Warden</strong><br>Not provided</p>
+        <p><strong>Allocated Mess</strong><br>BH5M11 : Mess-1 BH-5</p>
+      </div>
+    </section>
+
+  </main>
+</section>
 
 </div>
 
 <script>
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(screen => {
+function hideAllScreens() {
+  document.querySelectorAll('.screen, .feature-screen, #profileScreen').forEach(screen => {
     screen.classList.remove('active');
+    screen.style.display = 'none';
   });
+}
 
-  document.getElementById(id).classList.add('active');
+function openProfile() {
+  closeSideMenu();
   closeFeedback();
+  hideAllScreens();
+  document.body.classList.add('profile-open');
+  const profile = document.getElementById('profileScreen');
+  if (profile) {
+    profile.classList.add('active');
+    profile.style.display = 'flex';
+  }
 }
 
-function openMess() {
-  showScreen('messScreen');
+function closeProfile() {
+  document.body.classList.remove('profile-open');
+  const profile = document.getElementById('profileScreen');
+  if (profile) {
+    profile.classList.remove('active');
+    profile.style.display = 'none';
+  }
+  showScreen('dashboard');
 }
+
+function showScreen(id) {
+  hideAllScreens();
+  document.body.classList.remove('profile-open');
+  const target = document.getElementById(id);
+  if (target) {
+    target.classList.add('active');
+    target.style.display = id === 'dashboard' ? 'block' : (id === 'profileScreen' ? 'flex' : 'block');
+  }
+  closeFeedback();
+  closeSideMenu();
+}
+
+function dashboardNav(button, page) {
+  const screens = {
+    'Dashboard': 'dashboard',
+    'Happenings': 'happeningsScreen',
+    'RMS': 'rmsScreen',
+    'View Marks': 'marksScreen'
+  };
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(item => {
+    if (item.textContent.trim().includes(page)) item.classList.add('active');
+  });
+  if (screens[page]) showScreen(screens[page]);
+  else showToast(page + ' selected.');
+}
+
+function toggleSemester(button) {
+  button.closest('.semester').classList.toggle('open');
+}
+
+function proceedRMS() {
+  const checkboxes = document.querySelectorAll('#rmsScreen .rms-check input');
+  if (!Array.from(checkboxes).every(box => box.checked)) {
+    showToast('Please agree to all declarations to proceed.');
+    return;
+  }
+  showToast('Declarations accepted. RMS form is not connected yet.');
+}
+
+function openSideMenu() {
+  if (document.body.classList.contains('profile-open')) return;
+  document.getElementById('sideMenu')?.classList.add('open');
+  document.getElementById('menuOverlay')?.classList.add('open');
+}
+
+function closeSideMenu() {
+  document.getElementById('sideMenu')?.classList.remove('open');
+  document.getElementById('menuOverlay')?.classList.remove('open');
+}
+
+function filterSideMenu(query) {
+  const search = query.trim().toLowerCase();
+  document.querySelectorAll('.side-menu-item').forEach(item => {
+    item.style.display = item.textContent.toLowerCase().includes(search) ? 'flex' : 'none';
+  });
+}
+
+function menuAction(name) {
+  closeSideMenu();
+  if (name === 'Profile') { openProfile(); return; }
+  if (name === 'View Marks') { showScreen('marksScreen'); return; }
+  if (name === 'Logout') { showToast('Logout is a demo action.'); return; }
+  showToast(name + ' selected.');
+}
+
+function openMess() { showScreen('messScreen'); }
 
 function openFeedback() {
-  document.getElementById('feedbackOverlay').classList.add('open');
-
+  document.getElementById('feedbackOverlay')?.classList.add('open');
   document.querySelectorAll('.star-choice').forEach(star => {
     star.textContent = '☆';
     star.classList.remove('chosen');
   });
-
   const note = document.getElementById('ratingNote');
-  note.hidden = true;
-  note.textContent = '';
+  if (note) { note.hidden = true; note.textContent = ''; }
 }
 
 function closeFeedback() {
-  document.getElementById('feedbackOverlay').classList.remove('open');
+  document.getElementById('feedbackOverlay')?.classList.remove('open');
 }
 
 function rateStar(rating) {
@@ -1073,76 +2309,53 @@ function rateStar(rating) {
     star.textContent = selected ? '★' : '☆';
     star.classList.toggle('chosen', selected);
   });
-
   const note = document.getElementById('ratingNote');
-  note.hidden = false;
-  note.textContent = `You selected ${rating} out of 5 stars.`;
+  if (note) { note.hidden = false; note.textContent = `You selected ${rating} out of 5 stars.`; }
 }
 
 function chooseMeal(meal) {
-  showToast(`${meal} selected. Actual meal scanning will be connected next.`);
+  showToast(meal + ' selected. Actual meal scanning will be connected next.');
 }
 
 let toastTimer;
-
 function showToast(message) {
   const toast = document.getElementById('toast');
+  if (!toast) return;
   toast.textContent = message;
   toast.classList.add('show');
-
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
 function selectTile(tile, name) {
-  if (name === 'Mess Food Scanner') {
-    openMess();
-    return;
-  }
-
-  document.querySelectorAll('.tile').forEach(item => {
-    item.classList.remove('selected');
-  });
-
+  if (name === 'Mess Food Scanner') { openMess(); return; }
+  document.querySelectorAll('.tile').forEach(item => item.classList.remove('selected'));
   tile.classList.add('selected');
-  showToast(`${name} selected.`);
-}
-
-function dashboardNav(button, page) {
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.classList.remove('active');
-  });
-
-  button.classList.add('active');
-
-  if (page !== 'Dashboard') {
-    showToast(`${page} page will be implemented next.`);
-  }
+  showToast(name + ' selected.');
 }
 
 function addTile() {
   const name = prompt('Enter the name of the new tile:');
   if (!name || !name.trim()) return;
-
   const tile = document.createElement('div');
   tile.className = 'tile';
-
   const icon = document.createElement('div');
   icon.className = 'tile-icon';
   icon.innerHTML = '<svg viewBox="0 0 48 48"><rect x="9" y="5" width="30" height="38" rx="3"/><path d="M15 15H33M15 22H33M15 29H29"/></svg>';
-
   const label = document.createElement('span');
   label.className = 'tile-label';
   label.textContent = name.trim();
-
   tile.append(icon, label);
   tile.onclick = () => selectTile(tile, name.trim());
-
-  document.getElementById('tilesGrid').appendChild(tile);
+  document.getElementById('tilesGrid')?.appendChild(tile);
 }
 
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') closeFeedback();
+  if (event.key === 'Escape') {
+    closeSideMenu();
+    closeFeedback();
+    if (document.body.classList.contains('profile-open')) closeProfile();
+  }
 });
 </script>
 
